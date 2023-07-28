@@ -31,8 +31,21 @@ jobs:
           echo Hello, world!
           echo I\'m happy
 
-      # Runs a set of commands using the runners shell
-      - name: login ecs
+      # Runs a set of commands using the runners shell          
+      - name: Configure SSH
         run: |
-          ssh root@39.99.183.116
-          "$ALI_SECRET"
+          mkdir -p ~/.ssh/
+          echo "$SSH_KEY" > ~/.ssh/deploy.key
+          chmod 600 ~/.ssh/deploy.key
+          cat >>~/.ssh/config <<END
+          Host deploy
+            HostName 39.99.183.116
+            User root
+            IdentityFile ~/.ssh/deploy.key
+            StrictHostKeyChecking no
+          END
+        env:
+          SSH_KEY: ${{ secrets.ALI_SECRET }}
+          
+      - name: Exec Command
+        run: ssh deploy "echo hello"
