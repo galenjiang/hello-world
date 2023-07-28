@@ -28,11 +28,11 @@ jobs:
       # Runs a single command using the runners shell
       - name: Run a one-line script
         run: |
-            echo Hello, world!
-            echo I'm happy
+          echo Hello, world!
+          echo I'm happy
 
       # Runs a set of commands using the runners shell
       - name: login ecs
         run: |
-            ssh root@39.99.183.116
-            "$ALI_SECRET"
+          ssh root@39.99.183.116
+          "$ALI_SECRET"
